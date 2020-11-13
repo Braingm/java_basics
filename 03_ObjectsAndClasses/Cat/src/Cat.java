@@ -1,55 +1,63 @@
-
-public class Cat
-{
-    private double originWeight;
+public class Cat {
+    private final double originWeight;
     private double weight;
+    private double feedEaten;
 
-    private double minWeight;
-    private double maxWeight;
+    private final double MIN_WEIGHT = 1000;
+    private final double MAX_WEIGHT = 9000;
+    private final int EYES_COUNT = 2;
+    public static int count = 0;
 
-    public Cat()
-    {
+    public Cat() {
         weight = 1500.0 + 3000.0 * Math.random();
         originWeight = weight;
-        minWeight = 1000.0;
-        maxWeight = 9000.0;
+        count++;
 
     }
 
-    public void meow()
-    {
+    public void meow() {
         weight = weight - 1;
         System.out.println("Meow");
     }
 
-    public void feed(Double amount)
-    {
+    public void feed(Double amount) {
         weight = weight + amount;
+        feedEaten += amount;
     }
 
-    public void drink(Double amount)
-    {
+    public void drink(Double amount) {
         weight = weight + amount;
+        feedEaten += amount;
     }
 
-    public Double getWeight()
-    {
+    public Double getWeight() {
         return weight;
     }
 
-    public String getStatus()
-    {
-        if(weight < minWeight) {
+    public String getStatus() {
+        if (weight < MIN_WEIGHT) {
+            count--;
             return "Dead";
-        }
-        else if(weight > maxWeight) {
+        } else if (weight > MAX_WEIGHT) {
+            count--;
             return "Exploded";
-        }
-        else if(weight > originWeight) {
+        } else if (weight > originWeight) {
             return "Sleeping";
-        }
-        else {
+        } else {
             return "Playing";
         }
+    }
+
+    public static int getCount() {
+        return count;
+    }
+
+    public double getEatenAmount() {
+        return feedEaten;
+    }
+
+    public void pee() {
+        weight -= 50;
+        System.out.println("Очищение биологических отходов. Инициализация...");
     }
 }
