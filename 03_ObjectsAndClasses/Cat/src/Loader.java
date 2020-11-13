@@ -1,8 +1,7 @@
 
 public class Loader
 {
-    public static void main(String[] args)
-    {
+    public static void main(String[] args){
         Cat myrka = new Cat();
         Cat neko = new Cat();
         Cat koshka = new Cat();
@@ -24,5 +23,25 @@ public class Loader
         while (!godzilla.getStatus().equals("Exploded"))
             godzilla.feed(150.0);
         System.out.println(godzilla.getStatus());
+
+        Cat kittenOne = Loader.getKitten();
+        Cat kittenTwo = Loader.getKitten();
+        Cat kittenThree = Loader.getKitten();
+
+        Cat test = new Cat(5500);
+        Cat testClone = Loader.clone(test);
+        test.feed(100.0);
+        System.out.println(test.getWeight());
+        System.out.println(testClone.getWeight());
+    }
+
+    private static Cat getKitten(){
+        return new Cat(1100);
+    }
+
+    public static Cat clone(Cat cat) {
+        Cat clone = new Cat(cat.getWeight());
+        clone.setFurColor(cat.getFurColor());
+        return clone;
     }
 }

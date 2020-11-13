@@ -7,12 +7,18 @@ public class Cat {
     private final double MAX_WEIGHT = 9000;
     private final int EYES_COUNT = 2;
     public static int count = 0;
+    private String furColor;
 
     public Cat() {
         weight = 1500.0 + 3000.0 * Math.random();
         originWeight = weight;
         count++;
 
+    }
+    public Cat(double weight){
+        this.weight = weight;
+        originWeight = weight;
+        count++;
     }
 
     public void meow() {
@@ -59,5 +65,13 @@ public class Cat {
     public void pee() {
         weight -= 50;
         System.out.println("Очищение биологических отходов. Инициализация...");
+    }
+
+    public String getFurColor() {
+        return furColor;
+    }
+
+    public void setFurColor(String furColor) {
+        this.furColor = furColor;
     }
 }
