@@ -1,4 +1,4 @@
-public enum furColors {
+public enum FurColors {
     WHITE,
     BLACK,
     GINGER,
