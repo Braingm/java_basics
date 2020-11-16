@@ -1,20 +1,23 @@
 public class Cat {
     private double originWeight;
-    private final double minWeight;
-    private final double maxWeight;
+    private final double MIN_WEIGHT = 1000;
+    private final double MAX_WEIGHT = 9000;
     private double weight;
     private double feedEaten;
 
+    private double minWeight;
+    private double maxWeight;
+
     private final int EYES_COUNT = 2;
     public static int count = 0;
-    private furColors furColor;
+    private FurColors furColor;
     private boolean isDead = false;
 
     public Cat() {
         weight = 1500.0 + 3000.0 * Math.random();
         originWeight = weight;
-        minWeight = 1000;
-        maxWeight = 9000;
+        minWeight = MIN_WEIGHT;
+        maxWeight = MAX_WEIGHT;
         count++;
 
     }
@@ -29,16 +32,19 @@ public class Cat {
     public void meow() {
         weight = weight - 1;
         System.out.println("Meow");
+        this.lifeCheck();
     }
 
     public void feed(Double amount) {
         weight = weight + amount;
         feedEaten += amount;
+        this.lifeCheck();
     }
 
     public void drink(Double amount) {
         weight = weight + amount;
         feedEaten += amount;
+        this.lifeCheck();
     }
 
     public Double getWeight() {
@@ -46,22 +52,23 @@ public class Cat {
     }
 
     public String getStatus() {
-        if (weight < minWeight) {
-            if (!isDead) {
-                isDead = true;
-                count--;
-            }
+        if (weight < MIN_WEIGHT) {
             return "Dead";
-        } else if (weight > maxWeight) {
-            if (!isDead) {
-                isDead = true;
-                count--;
-            }
+        } else if (weight > MAX_WEIGHT) {
             return "Exploded";
         } else if (weight > originWeight) {
             return "Sleeping";
         } else {
             return "Playing";
+        }
+    }
+
+    public void lifeCheck() {
+        if (weight > maxWeight || weight < minWeight) {
+            if (!isDead) {
+                isDead = true;
+                count--;
+            }
         }
     }
 
@@ -76,13 +83,14 @@ public class Cat {
     public void pee() {
         weight -= 50;
         System.out.println("Очищение биологических отходов. Инициализация...");
+        this.lifeCheck();
     }
 
-    public furColors getFurColor() {
+    public FurColors getFurColor() {
         return furColor;
     }
 
-    public void setFurColor(furColors furColor) {
+    public void setFurColor(FurColors furColor) {
         this.furColor = furColor;
     }
 }
