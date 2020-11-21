@@ -30,21 +30,30 @@ public class Cat {
     }
 
     public void meow() {
-        this.lifeCheck();
+        if (isDead) {
+            System.out.println("Котейка умерла :(");
+            return;
+        }
         weight = weight - 1;
         System.out.println("Meow");
         this.lifeCheck();
     }
 
     public void feed(Double amount) {
-        this.lifeCheck();
+        if (isDead) {
+            System.out.println("Котейка умерла :(");
+            return;
+        }
         weight = weight + amount;
         feedEaten += amount;
         this.lifeCheck();
     }
 
     public void drink(Double amount) {
-        this.lifeCheck();
+        if (isDead) {
+            System.out.println("Котейка умерла :(");
+            return;
+        }
         weight = weight + amount;
         feedEaten += amount;
         this.lifeCheck();
@@ -67,13 +76,11 @@ public class Cat {
     }
 
     public void lifeCheck() {
-        if (isDead){
-            System.out.println("Котейка умерла :(");
-            return;
-        }
         if (weight > maxWeight || weight < minWeight) {
+            if (!isDead) {
                 isDead = true;
                 count--;
+            }
         }
     }
 
@@ -86,7 +93,10 @@ public class Cat {
     }
 
     public void pee() {
-        this.lifeCheck();
+        if (isDead) {
+            System.out.println("Котейка умерла :(");
+            return;
+        }
         weight -= 50;
         System.out.println("Очищение биологических отходов. Инициализация...");
         this.lifeCheck();
