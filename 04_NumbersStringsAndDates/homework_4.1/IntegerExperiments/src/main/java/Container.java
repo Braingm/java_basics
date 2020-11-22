@@ -1,4 +1,4 @@
 public class Container {
 
-  public Integer count;
+  public Integer count = 0;
 }
