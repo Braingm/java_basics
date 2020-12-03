@@ -1,36 +1,35 @@
 import java.util.Scanner;
 
 public class Main {
-
-    static int boxesInContainer = 27;
-    static int containersInTruck = 12;
-
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        String boxesString = scanner.nextLine();
+        String boxes = scanner.nextLine();
 
-        int boxesCount = Integer.parseInt(boxesString);
-        int boxes = 1;
+        int boxesCount = Integer.parseInt(boxes);
+        int boxNumber = 1;
         int trucks = 1;
         int containers = 1;
 
-        for (; boxes <= boxesCount; trucks++) {
-            System.out.println("Грузовик: " + trucks);
+        int boxesInContainer = 27;
+        int containersInTruck = 12;
+
+        for (; boxNumber <= boxesCount; trucks++) {
+            System.out.print("Грузовик: " + trucks + System.lineSeparator());
             for (int i = 0; i < containersInTruck; i++) {
-                if (boxes > boxesCount)
+                if (boxNumber > boxesCount)
                     break;
-                System.out.println("\tКонтейнер: " + containers);
+                System.out.print("\tКонтейнер: " + containers + System.lineSeparator());
                 for (int j = 0; j < boxesInContainer; j++) {
-                    if (boxes > boxesCount)
+                    if (boxNumber > boxesCount)
                         break;
-                    System.out.println("\t\tЯщик: " + boxes);
-                    boxes++;
+                    System.out.print("\t\tЯщик: " + boxNumber + System.lineSeparator());
+                    boxNumber++;
                 }
                 containers++;
             }
         }
-
-        System.out.printf("Необходимо:\nгрузовиков - %d шт.\nконтейнеров - %d шт.",(trucks-1),(containers-1));
+        System.out.println("Необходимо:");
+        System.out.println("грузовиков - " + (trucks-1) + " шт.");
+        System.out.println("контейнеров - " + (containers-1) + " шт.");
     }
-
 }
