@@ -10,10 +10,6 @@ public class Main {
             if (input.equals("0")) {
                 break;
             }
-            if (containsNumbers(input)) {
-                System.out.println("Введенная строка не является ФИО");
-                break;
-            }
             if (!isValid(input)) {
                 System.out.println("Введенная строка не является ФИО");
                 break;
@@ -34,33 +30,12 @@ public class Main {
         }
     }
 
-    // Метод определяет, содержит ли строка число. Для большей читаемости
-    private static boolean containsNumbers(String str) {
-        if (str.contains("0"))
-            return true;
-        if (str.contains("1"))
-            return true;
-        if (str.contains("2"))
-            return true;
-        if (str.contains("3"))
-            return true;
-        if (str.contains("4"))
-            return true;
-        if (str.contains("5"))
-            return true;
-        if (str.contains("6"))
-            return true;
-        if (str.contains("7"))
-            return true;
-        if (str.contains("8"))
-            return true;
-        return str.contains("9");
-    }
-
     // Метод проверяет валидность введённой строки
     private static boolean isValid(String str) {
         byte counter = 0;
         for (char c : str.toCharArray()) {
+            if (c >= 48 && c <= 57)
+                return false;
             if (c == ' ')
                 counter++;
         }
