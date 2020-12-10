@@ -1,3 +1,8 @@
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class Main {
 
@@ -13,10 +18,21 @@ public class Main {
 
     public static String collectBirthdays(int year, int month, int day) {
 
-        //TODO реализуйте метод для построения строки в следующем виде
-        //0 - 31.12.1990 - Mon
-        //1 - 31.12.1991 - Tue
-        
-        return "";
+        DateFormat format = new SimpleDateFormat(" - dd.MM.yyyy - EEE", Locale.US);
+        Calendar calendar = Calendar.getInstance();
+        Date currentDate = calendar.getTime();
+
+            calendar.set(year, month - 1, day);
+        Date inputDate = calendar.getTime();
+
+        StringBuilder result = new StringBuilder();
+
+        for (int i = 0; currentDate.after(inputDate) || currentDate.equals(inputDate); i++) {
+            result.append(i + format.format(inputDate) + System.lineSeparator());
+            calendar.add(Calendar.YEAR, 1);
+            inputDate = calendar.getTime();
+        }
+
+        return result.toString();
     }
 }
