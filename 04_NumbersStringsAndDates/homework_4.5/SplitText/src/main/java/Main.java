@@ -9,13 +9,11 @@ public class Main {
         StringBuilder result = new StringBuilder();
 
 
-        if (text.length() > 0) {
+        if (text.length() > 0)
             for (String str : buffer)
                 result.append(str).append(System.lineSeparator());
-            result.delete(result.length() - 1, result.length());
-        }
 
-        return result.toString();
+        return result.toString().trim();
     }
 
 }
