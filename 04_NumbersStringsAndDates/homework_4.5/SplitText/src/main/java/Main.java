@@ -5,14 +5,15 @@ public class Main {
     }
 
     public static String splitTextInToWords(String text) {
-        String[] buffer = text.replaceAll("[^a-zA-Z-’\\s]+", "").split("[\\s-]");
+        String[] buffer = text.replaceAll("[^a-zA-Z-’\\s]+", "").split("[\\s-]+");
         StringBuilder result = new StringBuilder();
 
-        for (String str : buffer)
-            if (!str.equals(""))
-                result.append(str + "\r\n");
-            if (result.length() > 0)
-            result.delete(result.length()-1,result.length());
+
+        if (text.length() > 0) {
+            for (String str : buffer)
+                result.append(str).append(System.lineSeparator());
+            result.delete(result.length() - 1, result.length());
+        }
 
         return result.toString();
     }
