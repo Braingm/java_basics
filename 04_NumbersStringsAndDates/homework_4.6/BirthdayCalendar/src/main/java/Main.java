@@ -1,7 +1,5 @@
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
 public class Main {
@@ -18,19 +16,15 @@ public class Main {
 
     public static String collectBirthdays(int year, int month, int day) {
 
-        DateFormat format = new SimpleDateFormat(" - dd.MM.yyyy - EEE", Locale.US);
-        Calendar calendar = Calendar.getInstance();
-        Date currentDate = calendar.getTime();
-
-            calendar.set(year, month - 1, day);
-        Date inputDate = calendar.getTime();
+        DateTimeFormatter format = DateTimeFormatter.ofPattern(" - dd.MM.yyyy - EEE", Locale.US);
+        LocalDate currentDate = LocalDate.now();
+        LocalDate inputDate = LocalDate.of(year, month, day);
 
         StringBuilder result = new StringBuilder();
 
-        for (int i = 0; currentDate.after(inputDate) || currentDate.equals(inputDate); i++) {
+        for (int i = 0; currentDate.isAfter(inputDate) || currentDate.isEqual(inputDate); i++) {
             result.append(i + format.format(inputDate) + System.lineSeparator());
-            calendar.add(Calendar.YEAR, 1);
-            inputDate = calendar.getTime();
+            inputDate = inputDate.plusYears(1);
         }
 
         return result.toString();
