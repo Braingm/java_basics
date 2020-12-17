@@ -12,23 +12,20 @@ public class Main {
             if (input.equals("0")) {
                 break;
             }
-            if (!isValid(input)) {
+            if (!input.matches("([А-Я][а-я]+(-[А-Я][а-я]*)?\\s?){3}[а-я]*")) {
                 System.out.println("Введенная строка не является ФИО");
                 break;
             }
+            StringBuilder result = new StringBuilder();
+            String[] names = new String[3];
+            int i = 0;
 
-            String[] names = input.split(" ");
+            Matcher matcher = Pattern.compile("([А-Я][а-я]+(-?[А-Я][а-я]+)?)(\\s?[а-я]+)?").matcher(input);
+            while (matcher.find()) {
+                names[i] = matcher.group();
+                i++;
+            }
             System.out.printf("Фамилия: %s\r\nИмя: %s\r\nОтчество: %s", names[0], names[1], names[2]);
-
         }
     }
-
-    private static boolean isValid(String str) {
-        int result = 0;
-        Matcher matcher = Pattern.compile("[\\s\\d]").matcher(str);
-        while (matcher.find())
-            result++;
-        return result == 2;
-    }
-
 }
