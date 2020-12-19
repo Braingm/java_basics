@@ -1,7 +1,16 @@
 public class ReverseArray {
 
-    //TODO: Напишите код, который меняет порядок расположения элементов внутри массива на обратный.
-    public static String[] reverse (String[] strings){
+    public static String[] reverse(String[] strings) {
+        // Конечная позиция
+        int z = strings.length - 1;
+        // Пузырь
+        String str;
+
+        for (int i = 0; i < strings.length / 2; i++) {
+            str = strings[i];
+            strings[i] = strings[z];
+            strings[z--] = str;
+        }
         return strings;
     }
 }
