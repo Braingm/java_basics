@@ -3,6 +3,7 @@ import java.text.DecimalFormat;
 public class Hospital {
 
     public static float[] generatePatientsTemperatures(int patientsCount) {
+
         float[] result = new float[patientsCount];
         for (int i = 0; i < patientsCount; i++) {
             result[i] = (float) ((Math.random() * (40.0 - 32.0)) + 32.0);
@@ -11,6 +12,7 @@ public class Hospital {
     }
 
     public static String getReport(float[] temperatureData) {
+
         StringBuilder report = new StringBuilder();
         float temperatureSum = 0;
         int healthyPatients = 0;
