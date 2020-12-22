@@ -2,11 +2,16 @@ import java.text.DecimalFormat;
 
 public class Hospital {
 
+    private static final int minTemperature = 32;
+    private static final int maxTemperature = 40;
+    private static final float minNormalTemperature = 36.1f;
+    private static final float maxNormalTemperature = 37f;
+
     public static float[] generatePatientsTemperatures(int patientsCount) {
 
         float[] result = new float[patientsCount];
         for (int i = 0; i < patientsCount; i++) {
-            result[i] = (float) ((Math.random() * (40.0 - 32.0)) + 32.0);
+            result[i] = (float) ((Math.random() * (maxTemperature - minTemperature)) + minTemperature);
         }
         return result;
     }
@@ -20,7 +25,7 @@ public class Hospital {
         report.append("Температуры пациентов: ");
         for (float fl : temperatureData) {
             report.append(fl + " ");
-            if (fl > 36.1 && fl < 37.0 ) {
+            if (fl > minNormalTemperature && fl < maxNormalTemperature ) {
                 healthyPatients++;
             }
             temperatureSum += fl;
