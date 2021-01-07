@@ -8,21 +8,18 @@ public class TodoList {
     public void add(String todo) {
         list.add(list.size(), todo);
         System.out.printf("Добавлено дело \"%s\"", todo);
-        System.out.println("");
     }
 
     public void add(int index, String todo) {
         if (index > list.size() + 1) {
             System.out.println("Неверный индекс");
-            System.out.println("");
             return;
         }
         if (index == list.size() + 1)
-            list.add(index - 1, todo);
+            list.add(index - 1, todo.trim());
         else
-            list.add(index, todo);
-        System.out.printf("Добавлено дело \"%s\" на позицию %d", todo, index);
-        System.out.println("");
+            list.add(index, todo.trim());
+        System.out.printf("Добавлено дело \"%s\" на позицию %d", todo.trim(), index);
     }
 
     public void edit(String todo, int index) {
@@ -30,9 +27,8 @@ public class TodoList {
             System.out.println("Изменение не возможно, неверный индекс");
             return;
         }
-        System.out.printf("Дело \"%s\" заменено на \"%s\"", list.get(index), todo);
-        System.out.println("");
-        list.set(index, todo);
+        System.out.printf("Дело \"%s\" заменено на \"%s\"", list.get(index), todo.trim());
+        list.set(index, todo.trim());
     }
 
     public void delete(int index) {
@@ -41,16 +37,16 @@ public class TodoList {
             return;
         }
         System.out.printf("Дело \"%s\" удалено", list.get(index));
-        System.out.println("");
         list.remove(index);
     }
 
-    public ArrayList<String> getTodos() {
-//        for (int i = 0; i < list.size(); i++) {
-//            System.out.printf("%d - %s", i, list.get(i));
-//
-//        }
-        return (ArrayList<String>) list;
+    public void list() {
+        for (int i = 0; i < list.size(); i++) {
+            System.out.printf("%d - %s", i, list.get(i) + System.lineSeparator());
+        }
     }
 
+    public ArrayList<String> getTodos() {
+        return (ArrayList<String>) list;
+    }
 }
