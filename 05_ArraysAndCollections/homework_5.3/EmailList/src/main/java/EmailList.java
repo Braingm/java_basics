@@ -1,15 +1,16 @@
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class EmailList {
+    private Set<String> emailList = new TreeSet<>();
 
     public void add(String email) {
-        // TODO: валидный формат email добавляется
+        if (email.matches(".+@.+\\.+.+"))
+        emailList.add(email.toLowerCase());
     }
 
     public List<String> getSortedEmails() {
-        // TODO: возвращается список электронных адресов в алфавитном порядке
-        return Collections.emptyList();
+        List<String> result = new LinkedList<>(emailList);
+        Collections.sort(result);
+        return result;
     }
-
 }

@@ -2,6 +2,7 @@ import java.util.Scanner;
 
 public class Main {
     public static final String WRONG_EMAIL_ANSWER = "Неверный формат email";
+    public static EmailList emailList = new EmailList();
     
     /* TODO:
         Пример вывода списка Email, после ввода команды LIST в консоль:
@@ -19,15 +20,28 @@ public class Main {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        
+
         while (true) {
             String input = scanner.nextLine();
             if (input.equals("0")) {
                 break;
             }
-            
-            //TODO: write code here
-            
+            String[] command = input.split(" ", 2);
+            switch (command[0].toLowerCase()) {
+                case "list" -> {
+                    for (String s : emailList.getSortedEmails()) {
+                        System.out.println(s);
+                    }
+                }
+                case "add" -> {
+                    if (command[1].matches(".+@.+\\.+.+")) {
+                        emailList.add(input.substring(input.indexOf(" ")));
+                        System.out.println("Added");
+                    } else {
+                        System.out.println(WRONG_EMAIL_ANSWER);
+                    }
+                }
+            }
         }
     }
 }
