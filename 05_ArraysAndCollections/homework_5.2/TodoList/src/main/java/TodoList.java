@@ -3,11 +3,12 @@ import java.util.List;
 
 public class TodoList {
 
-    private List<String> list = new ArrayList<>();
+    private final List<String> list = new ArrayList<>();
 
     public void add(String todo) {
         list.add(list.size(), todo);
         System.out.printf("Добавлено дело \"%s\"", todo);
+        System.out.println();
     }
 
     public void add(int index, String todo) {
@@ -20,6 +21,7 @@ public class TodoList {
         else
             list.add(index, todo.trim());
         System.out.printf("Добавлено дело \"%s\" на позицию %d", todo.trim(), index);
+        System.out.println();
     }
 
     public void edit(String todo, int index) {
@@ -28,6 +30,7 @@ public class TodoList {
             return;
         }
         System.out.printf("Дело \"%s\" заменено на \"%s\"", list.get(index), todo.trim());
+        System.out.println();
         list.set(index, todo.trim());
     }
 
@@ -37,12 +40,14 @@ public class TodoList {
             return;
         }
         System.out.printf("Дело \"%s\" удалено", list.get(index));
+        System.out.println();
         list.remove(index);
     }
 
     public void list() {
         for (int i = 0; i < list.size(); i++) {
-            System.out.printf("%d - %s", i, list.get(i) + System.lineSeparator());
+            System.out.printf("%d - %s", i, list.get(i));
+            System.out.println();
         }
     }
 

@@ -3,6 +3,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class Main {
+
+    private static final String LIST = "list";
+    private static final String DELETE = "delete";
+    private static final String ADD = "add";
+    private static final String EDIT = "edit";
+
     private static TodoList todoList = new TodoList();
 
     public static void main(String[] args) throws IOException {
@@ -12,28 +18,27 @@ public class Main {
             if (string.equalsIgnoreCase("exit"))
                 break;
 
-            String[] command = string.split(" ", 2);
+            String[] inputParts = string.split(" ", 2);
+            String partWOIndex = null;
 
-            int index;
-            boolean mark;
+            int index = -1;
+            boolean mark = false;
             try {
-                index = Integer.parseInt(command[1].substring(0, command[1].indexOf(" ")));
+                index = Integer.parseInt(inputParts[1].substring(0, inputParts[1].indexOf(" ")));
                 mark = true;
-            } catch (Exception e) {
-                index = -1;
-                mark = false;
-            }
+                partWOIndex = inputParts[1].substring(inputParts[1].indexOf(" "));
+            } catch (Exception e) {}
 
-            switch (command[0].toLowerCase()) {
-                case "list" -> todoList.list();
-                case "delete" -> todoList.delete(Integer.parseInt(command[1]));
-                case "add" -> {
+            switch (inputParts[0].toLowerCase()) {
+                case LIST -> todoList.list();
+                case DELETE -> todoList.delete(index);
+                case ADD -> {
                     if (mark)
-                        todoList.add(index, command[1].substring(command[1].indexOf(" ")));
+                        todoList.add(index, partWOIndex);
                     else
-                        todoList.add(command[1]);
+                        todoList.add(inputParts[1]);
                 }
-                case "edit" -> todoList.edit(command[1].substring(command[1].indexOf(" ")), index);
+                case EDIT -> todoList.edit(partWOIndex, index);
             }
         }
         // TODO: написать консольное приложение для работы со списком дел todoList
