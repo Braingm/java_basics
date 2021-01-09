@@ -9,8 +9,6 @@ public class EmailList {
     }
 
     public List<String> getSortedEmails() {
-        List<String> result = new LinkedList<>(emailList);
-        Collections.sort(result);
-        return result;
+        return new ArrayList<>(emailList);
     }
 }
