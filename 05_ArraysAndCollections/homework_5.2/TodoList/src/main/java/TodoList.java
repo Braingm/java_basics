@@ -13,7 +13,7 @@ public class TodoList {
 
     public void add(int index, String todo) {
         if (index > list.size() + 1) {
-            System.out.println("Неверный индекс");
+            this.add(todo);
             return;
         }
         if (index == list.size() + 1)
