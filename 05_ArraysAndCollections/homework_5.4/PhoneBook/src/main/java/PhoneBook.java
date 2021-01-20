@@ -1,18 +1,24 @@
-import java.util.*;
+import java.util.HashMap;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class PhoneBook {
-    private HashMap<String, List<String>> contacts = new HashMap<>();
+    private HashMap<String, Set<String>> contacts = new HashMap<>();
 
     public void addContact(String phone, String name) {
         // проверьте корректность формата имени и телефона
         // если такой номер уже есть в списке, то перезаписать имя абонента
 
-        if (phone == "" || name == "")
+        if (phone == "" || name == "") {
             return;
-        if (!name.matches("\\W+[^\\d]"))
+        }
+        if (!name.matches("\\W+[^\\d]")) {
             return;
-        if (!phone.matches("\\d{11}"))
+        }
+        if (!phone.matches("\\d{11}")) {
             return;
+        }
+
         if (!this.getNameByPhone(phone).equals("")) {
             String[] array = getNameByPhone(phone).split("-");
             String tmpName = array[0].trim();
@@ -24,12 +30,10 @@ public class PhoneBook {
         if (contacts.containsKey(name)) {
             contacts.get(name).add(phone);
         } else {
-            List<String> numbers = new ArrayList<>();
+            Set<String> numbers = new TreeSet<>();
             numbers.add(phone);
             contacts.put(name, numbers);
         }
-
-
     }
 
     public String getNameByPhone(String phone) {
@@ -85,13 +89,11 @@ public class PhoneBook {
     }
 
     public boolean containsNumber(String number) {
-        for (List<String> list : contacts.values()) {
-            for (String s : list) {
-                if (s.equals(number))
-                    return true;
+        for (Set<String> set : contacts.values()) {
+            if (set.contains(number)) {
+                return true;
             }
         }
         return false;
     }
-
 }
