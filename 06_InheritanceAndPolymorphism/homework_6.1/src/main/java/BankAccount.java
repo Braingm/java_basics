@@ -1,15 +1,28 @@
+import java.math.BigDecimal;
+
 public class BankAccount {
+  BigDecimal moneyAmount = new BigDecimal(0);
 
   public double getAmount() {
-    //TODO: реализуйте метод и удалите todo
-    return 0;
+    return moneyAmount.doubleValue();
   }
 
   public void put(double amountToPut) {
-    //TODO: реализуйте метод и удалите todo
+    if (amountToPut <= 0){
+      return;
+    }
+
+    moneyAmount = moneyAmount.add(BigDecimal.valueOf(amountToPut));
   }
 
   public void take(double amountToTake) {
-    //TODO: реализуйте метод и удалите todo
+    if (amountToTake <= 0){
+      return;
+    }
+    if (amountToTake > moneyAmount.doubleValue()){
+      return;
+    }
+
+    moneyAmount = moneyAmount.subtract(BigDecimal.valueOf(amountToTake));
   }
 }
