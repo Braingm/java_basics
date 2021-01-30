@@ -1,7 +1,7 @@
 import java.math.BigDecimal;
 
 public class BankAccount {
-  BigDecimal moneyAmount = new BigDecimal(0);
+  protected BigDecimal moneyAmount = new BigDecimal(0);
 
   public double getAmount() {
     return moneyAmount.doubleValue();
