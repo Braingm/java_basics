@@ -25,4 +25,14 @@ public class BankAccount {
 
     moneyAmount = moneyAmount.subtract(BigDecimal.valueOf(amountToTake));
   }
+
+  public boolean send(BankAccount receiver, double amount){
+    if (amount > moneyAmount.doubleValue()){
+      return false;
+    }
+
+    this.take(amount);
+    receiver.put(amount);
+    return true;
+  }
 }

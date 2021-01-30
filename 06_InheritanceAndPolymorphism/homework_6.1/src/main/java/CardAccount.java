@@ -14,4 +14,17 @@ public class CardAccount extends BankAccount {
 
          moneyAmount = moneyAmount.subtract(BigDecimal.valueOf(amountToTake + penny));
     }
+
+    @Override
+    public boolean send(BankAccount receiver, double amount) {
+        double penny = amount * 0.01;
+        if (amount + penny > moneyAmount.doubleValue()){
+            return false;
+        }
+
+        this.take(amount);
+        receiver.put(amount);
+        return true;
+    }
+
 }
