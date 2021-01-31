@@ -8,7 +8,7 @@ public class CardAccount extends BankAccount {
         if (amountToTake <= 0){
             return;
         }
-        if (amountToTake + penny > moneyAmount.doubleValue()){
+        if (amountToTake + penny > getAmount()){
             return;
         }
 

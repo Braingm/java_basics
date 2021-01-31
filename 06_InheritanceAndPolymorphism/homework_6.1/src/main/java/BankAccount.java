@@ -1,38 +1,50 @@
 import java.math.BigDecimal;
 
 public class BankAccount {
-  protected BigDecimal moneyAmount = new BigDecimal(0);
+    protected BigDecimal moneyAmount = new BigDecimal(0);
 
-  public double getAmount() {
-    return moneyAmount.doubleValue();
-  }
-
-  protected void put(double amountToPut) {
-    if (amountToPut <= 0){
-      return;
+    public double getAmount() {
+        return moneyAmount.doubleValue();
     }
 
-    moneyAmount = moneyAmount.add(BigDecimal.valueOf(amountToPut));
-  }
+    protected void put(double amountToPut) {
+        if (amountToPut <= 0) {
+            return;
+        }
 
-  protected void take(double amountToTake) {
-    if (amountToTake <= 0){
-      return;
-    }
-    if (amountToTake > moneyAmount.doubleValue()){
-      return;
+        moneyAmount = moneyAmount.add(BigDecimal.valueOf(amountToPut));
     }
 
-    moneyAmount = moneyAmount.subtract(BigDecimal.valueOf(amountToTake));
-  }
+    protected void take(double amountToTake) {
+        if (amountToTake <= 0) {
+            return;
+        }
+        if (amountToTake > getAmount()) {
+            return;
+        }
 
-  protected boolean send(BankAccount receiver, double amount){
-    if (amount > moneyAmount.doubleValue()){
-      return false;
+        moneyAmount = moneyAmount.subtract(BigDecimal.valueOf(amountToTake));
     }
 
-    this.take(amount);
-    receiver.put(amount);
-    return true;
-  }
+    protected void take(double amountToTake, double taxPercent) {
+      double tax = amountToTake * taxPercent;
+        if (amountToTake <= 0) {
+          return;
+        }
+        if (amountToTake + tax > getAmount()){
+          return;
+        }
+
+        moneyAmount = moneyAmount.subtract(BigDecimal.valueOf(amountToTake + tax));
+    }
+
+    protected boolean send(BankAccount receiver, double amount) {
+        if (amount > getAmount()) {
+            return false;
+        }
+
+        this.take(amount);
+        receiver.put(amount);
+        return true;
+    }
 }
