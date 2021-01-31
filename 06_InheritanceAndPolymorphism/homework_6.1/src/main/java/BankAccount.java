@@ -7,7 +7,7 @@ public class BankAccount {
     return moneyAmount.doubleValue();
   }
 
-  public void put(double amountToPut) {
+  protected void put(double amountToPut) {
     if (amountToPut <= 0){
       return;
     }
@@ -15,7 +15,7 @@ public class BankAccount {
     moneyAmount = moneyAmount.add(BigDecimal.valueOf(amountToPut));
   }
 
-  public void take(double amountToTake) {
+  protected void take(double amountToTake) {
     if (amountToTake <= 0){
       return;
     }
@@ -26,7 +26,7 @@ public class BankAccount {
     moneyAmount = moneyAmount.subtract(BigDecimal.valueOf(amountToTake));
   }
 
-  public boolean send(BankAccount receiver, double amount){
+  protected boolean send(BankAccount receiver, double amount){
     if (amount > moneyAmount.doubleValue()){
       return false;
     }
