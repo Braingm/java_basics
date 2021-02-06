@@ -11,29 +11,29 @@ public abstract class Client {
         if (amountToPut <= 0) {
             return;
         }
-        moneyAmount += amountToPut - getPutTax(amountToPut);
+        moneyAmount += amountToPut;
+    }
+
+    public void put(double amountToPut, double taxPercent) {
+        if (amountToPut <= 0) {
+            return;
+        }
+        double tax = amountToPut * (taxPercent / 100.0);
+        moneyAmount += amountToPut - tax;
     }
 
     public void take(double amountToTake) {
-        if (amountToTake + getTakeTax(amountToTake) > moneyAmount || amountToTake <= 0) {
+        if (amountToTake > moneyAmount || amountToTake <= 0) {
             return;
         }
-        moneyAmount -= amountToTake + getTakeTax(amountToTake);
+        moneyAmount -= amountToTake;
     }
 
-    protected void setTakeTaxPercent(double percent) {
-        this.takeTaxPercent = percent;
+    public void take(double amountToTake, double taxPercent) {
+        double tax = amountToTake * (taxPercent / 100.0);
+        if (amountToTake + tax > moneyAmount || amountToTake == 0) {
+            return;
+        }
+        moneyAmount -= amountToTake + tax;
     }
-    protected void setPutTaxPercent(double percent){
-        this.putTaxPercent = percent;
-    }
-
-    private double getTakeTax(double moneyAmount) {
-        return moneyAmount * (takeTaxPercent / 100);
-    }
-
-    private double getPutTax(double moneyAmount){
-        return moneyAmount * (putTaxPercent / 100);
-    }
-
 }
