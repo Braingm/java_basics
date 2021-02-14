@@ -2,33 +2,22 @@ package Employers;
 
 import Company.Company;
 
-public abstract class Employee implements Comparable {
-    protected long salary = 0;
-    public Company company;
-    public boolean isFree;
+public interface Employee {
+    int MINIMAL_SALARY = 18000;
 
-    public long getSalary(){
-        return salary;
-    }
-    public void setSalary(long salary){
-        this.salary = salary;
-    }
+    long getSalary();
 
-    public Company getCompany() {
-        return company;
-    }
+    void setSalary(long salary);
 
-    public void setCompany(Company company) {
-        this.company = company;
-        isFree = false;
-    }
+    Company getCompany();
 
-    public void getFired(){
-        this.company = null;
-        isFree = true;
-    }
+    void setCompany(Company company);
 
-    int compareTo(Employee o) {
-        return Long.compare(this.getSalary(), o.getSalary());
+    default int compareTo(Employee o){
+        if (this.getSalary() > o.getSalary())
+            return 1;
+        if (this.getSalary() < o.getSalary())
+            return -1;
+        return 0;
     }
 }
