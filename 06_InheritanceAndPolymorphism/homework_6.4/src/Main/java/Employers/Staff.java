@@ -3,6 +3,7 @@ package Employers;
 import Company.Company;
 
 public abstract class Staff implements Employee {
+    protected static int MINIMAL_SALARY = 18000;
 
     public boolean isFree = true;
     protected long salary = 0;
@@ -22,7 +23,8 @@ public abstract class Staff implements Employee {
 
     public void setCompany(Company company) {
         if (!isFree) {
-            this.company.fire(this);
+            System.out.println("Ошибка найма");
+            return;
         }
         this.company = company;
         isFree = false;
