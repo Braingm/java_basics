@@ -13,7 +13,7 @@ public class TestFindEmployeeByHighestSalary {
 
   @Test
   @DisplayName("Входные данные - staff.txt ")
-  void getEmployee() throws ParseException {
+  void getEmployee() throws Exception {
     List<Employee> staff = Employee.loadStaffFromFile("data/staff.txt");
     Date date = (new SimpleDateFormat("dd.MM.yyyy")).parse("31.01.2017");
     Employee expectedEmployee = new Employee("Дмитрий Кочергин", 140000, date);
