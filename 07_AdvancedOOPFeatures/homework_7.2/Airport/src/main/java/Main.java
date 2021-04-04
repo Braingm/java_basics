@@ -1,4 +1,3 @@
-import com.skillbox.airport.Aircraft;
 import com.skillbox.airport.Airport;
 import com.skillbox.airport.Flight;
 
@@ -22,10 +21,11 @@ public class Main {
         datePlusTwoHour.add(Calendar.HOUR, 2);
 
         airport.getTerminals()
-                .forEach(terminal -> terminal.getFlights().stream()
+                .stream().flatMap(
+                terminal -> terminal.getFlights().stream()
                         .filter(flight -> flight.getType() == DEPARTURE)
-                        .filter(flight -> flight.getDate().before(datePlusTwoHour.getTime()))
-                        .forEach(result::add));
+                        .filter(flight -> flight.getDate().before(datePlusTwoHour.getTime())))
+                .forEach(result::add);
 
         result.sort(Comparator.comparing(Flight::getDate).thenComparing(Flight::getCode));
 
