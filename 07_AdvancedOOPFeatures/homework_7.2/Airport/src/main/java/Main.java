@@ -1,8 +1,10 @@
+import com.skillbox.airport.Aircraft;
 import com.skillbox.airport.Airport;
 import com.skillbox.airport.Flight;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.List;
 
 import static com.skillbox.airport.Flight.Type.DEPARTURE;
@@ -24,6 +26,8 @@ public class Main {
                         .filter(flight -> flight.getType() == DEPARTURE)
                         .filter(flight -> flight.getDate().before(datePlusTwoHour.getTime()))
                         .forEach(result::add));
+
+        result.sort(Comparator.comparing(Flight::getDate).thenComparing(Flight::getCode));
 
         return result;
     }
