@@ -2,10 +2,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class Employee {
 
@@ -23,18 +20,17 @@ public class Employee {
         String dateFormat = "dd.MM.yyyy";
         List<Employee> staff = new ArrayList<>();
 
-            Files.readAllLines(Paths.get(path))
-                    .forEach(string -> {
-                        String[] fragments = string.split("\t");
-                        try {
-                            staff.add(new Employee(
-                                    fragments[0],
-                                    Integer.parseInt(fragments[1]),
-                                    (new SimpleDateFormat(dateFormat).parse(fragments[2]))));
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
-                    });
+        Files.lines(Paths.get(path))
+                .map(s -> s.split("\t"))
+                .map(strings -> {
+                    try {
+                        return new Employee(strings[0], Integer.parseInt(strings[1]), new SimpleDateFormat(dateFormat).parse(strings[2]));
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                        return new Employee("Name", 0, Calendar.getInstance().getTime());
+                    }
+                })
+                .forEach(staff::add);
 
       /*List<String> lines = Files.readAllLines(Paths.get(path));
       for (String line : lines) {
