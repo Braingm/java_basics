@@ -1,27 +1,38 @@
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class Employee {
 
-  private String name;
-  private Integer salary;
-  private Date workStart;
+    private String name;
+    private Integer salary;
+    private Date workStart;
 
-  public Employee(String name, Integer salary, Date workStart) {
-    this.name = name;
-    this.salary = salary;
-    this.workStart = workStart;
-  }
+    public Employee(String name, Integer salary, Date workStart) {
+        this.name = name;
+        this.salary = salary;
+        this.workStart = workStart;
+    }
 
-  public static List<Employee> loadStaffFromFile(String path) {
-    List<Employee> staff = new ArrayList<>();
-    try {
-      List<String> lines = Files.readAllLines(Paths.get(path));
+    public static List<Employee> loadStaffFromFile(String path) throws Exception {
+        String dateFormat = "dd.MM.yyyy";
+        List<Employee> staff = new ArrayList<>();
+
+        Files.lines(Paths.get(path))
+                .map(s -> s.split("\t"))
+                .map(strings -> {
+                    try {
+                        return new Employee(strings[0], Integer.parseInt(strings[1]), new SimpleDateFormat(dateFormat).parse(strings[2]));
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                        return new Employee("Name", 0, Calendar.getInstance().getTime());
+                    }
+                })
+                .forEach(staff::add);
+
+      /*List<String> lines = Files.readAllLines(Paths.get(path));
       for (String line : lines) {
         String[] fragments = line.split("\t");
         if (fragments.length != 3) {
@@ -34,59 +45,56 @@ public class Employee {
             Integer.parseInt(fragments[1]),
             (new SimpleDateFormat(dateFormat)).parse(fragments[2])
         ));
-      }
-    } catch (Exception ex) {
-      ex.printStackTrace();
+      }*/
+        return staff;
     }
-    return staff;
-  }
 
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public Integer getSalary() {
-    return salary;
-  }
-
-  public void setSalary(int salary) {
-    this.salary = salary;
-  }
-
-  public Date getWorkStart() {
-    return workStart;
-  }
-
-  public void setWorkStart(Date workStart) {
-    this.workStart = workStart;
-  }
-
-  public String toString() {
-    return name + " - " + salary + " - " +
-        (new SimpleDateFormat("dd.MM.yyyy")).format(workStart);
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
+    public String getName() {
+        return name;
     }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    Employee employee = (Employee) o;
-    return Objects.equals(name, employee.name) &&
-        Objects.equals(salary, employee.salary) &&
-        Objects.equals(workStart, employee.workStart);
-  }
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(name, salary, workStart);
-  }
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Integer getSalary() {
+        return salary;
+    }
+
+    public void setSalary(int salary) {
+        this.salary = salary;
+    }
+
+    public Date getWorkStart() {
+        return workStart;
+    }
+
+    public void setWorkStart(Date workStart) {
+        this.workStart = workStart;
+    }
+
+    public String toString() {
+        return name + " - " + salary + " - " +
+                (new SimpleDateFormat("dd.MM.yyyy")).format(workStart);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Employee employee = (Employee) o;
+        return Objects.equals(name, employee.name) &&
+                Objects.equals(salary, employee.salary) &&
+                Objects.equals(workStart, employee.workStart);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, salary, workStart);
+    }
 
 }
