@@ -17,12 +17,12 @@ public class RouteCalculator {
 
     public List<Station> getShortestRoute(Station from, Station to) {
         List<Station> route = getRouteOnTheLine(from, to);
-        if (route != null) {
+        if (route != null && route.size() != 0) {
             return route;
         }
 
         route = getRouteWithOneConnection(from, to);
-        if (route != null) {
+        if (route != null && route.size() != 0) {
             return route;
         }
 

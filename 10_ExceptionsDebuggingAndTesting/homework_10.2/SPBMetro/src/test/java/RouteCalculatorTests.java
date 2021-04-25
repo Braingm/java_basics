@@ -59,13 +59,13 @@ public class RouteCalculatorTests extends TestCase {
 
     }
 
-    public void testGetShortestRoute() {
+    public void testTwoConnections() {
 
         RouteCalculator routeCalculator = new RouteCalculator(stationIndex);
         Station from = stationIndex.getStation("Синяя");
-        Station to = stationIndex.getStation("Первая");
+        Station to = stationIndex.getStation("Пятая");
 
-        List<Station> actual = routeCalculator.getShortestRoute(from, to);
+        var actual = routeCalculator.getShortestRoute(from, to);
 
         List<Station> expected = new ArrayList<>();
         expected.add(stationIndex.getStation("Синяя"));
@@ -74,7 +74,6 @@ public class RouteCalculatorTests extends TestCase {
         expected.add(stationIndex.getStation("Яблочная"));
         expected.add(stationIndex.getStation("Киви"));
         expected.add(stationIndex.getStation("Банановая"));
-        expected.add(stationIndex.getStation("Первая"));
         expected.add(stationIndex.getStation("Вторая"));
         expected.add(stationIndex.getStation("Третья"));
         expected.add(stationIndex.getStation("Четвёртая"));
@@ -82,4 +81,35 @@ public class RouteCalculatorTests extends TestCase {
 
         assertEquals(expected, actual);
     }
+
+    public void testOneConnection(){
+        RouteCalculator routeCalculator = new RouteCalculator(stationIndex);
+        Station from = stationIndex.getStation("Жёлтая");
+        Station to = stationIndex.getStation("Киви");
+
+        var actual = routeCalculator.getShortestRoute(from,to);
+        var actualTime = RouteCalculator.calculateDuration(actual);
+
+        List<Station> expected = new ArrayList<>();
+        expected.add(stationIndex.getStation("Жёлтая"));
+        expected.add(stationIndex.getStation("Красная"));
+        expected.add(stationIndex.getStation("Яблочная"));
+        expected.add(stationIndex.getStation("Киви"));
+
+        assertEquals(expected,actual);
+        assertEquals(8.5 , actualTime);
+    }
+
+    public void testEqualStation(){
+        RouteCalculator routeCalculator = new RouteCalculator(stationIndex);
+        Station from = stationIndex.getStation("Серая");
+
+        var actual = routeCalculator.getShortestRoute(from,from);
+
+        var expected = new ArrayList<Station>();
+        expected.add(stationIndex.getStation("Серая"));
+
+        assertEquals(expected, actual);
+    }
+
 }
