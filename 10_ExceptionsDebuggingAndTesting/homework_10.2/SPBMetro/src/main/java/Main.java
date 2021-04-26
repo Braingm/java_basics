@@ -1,5 +1,7 @@
 import core.Line;
 import core.Station;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -11,6 +13,10 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Main {
+    private static Logger searchLogger;
+    private static Logger mismatchLogger;
+    private static Logger exceptionsLogger;
+
     private static final String DATA_FILE = "src/main/resources/map.json";
     private static Scanner scanner;
 
@@ -18,6 +24,9 @@ public class Main {
 
     public static void main(String[] args) {
         RouteCalculator calculator = getRouteCalculator();
+        searchLogger = LogManager.getLogger("searchLogger");
+        mismatchLogger = LogManager.getLogger("mismatchLogger");
+        exceptionsLogger = LogManager.getLogger("exceptionsLogger");
 
         System.out.println("Программа расчёта маршрутов метрополитена Санкт-Петербурга\n");
         scanner = new Scanner(System.in);
@@ -61,9 +70,11 @@ public class Main {
             String line = scanner.nextLine().trim();
             Station station = stationIndex.getStation(line);
             if (station != null) {
+                searchLogger.info("Поиск станции: " + line);
                 return station;
             }
             System.out.println("Станция не найдена :(");
+            mismatchLogger.debug("Ошибка поиска стации: " + line);
         }
     }
 
@@ -83,6 +94,7 @@ public class Main {
             parseConnections(connectionsArray);
         } catch (Exception ex) {
             ex.printStackTrace();
+            exceptionsLogger.error("Ошибка :" + ex);
         }
     }
 
