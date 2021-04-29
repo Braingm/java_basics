@@ -13,7 +13,7 @@
     </appenders>
 
     <loggers>
-
+        <root/>
         <logger name="searchLogger" level="info">
             <appender-ref ref="Search" level="info"/>
         </logger>
