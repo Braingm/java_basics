@@ -10,10 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
-    //Инициализация листа
-    private static final List<String> memoryUnits = new ArrayList();
+    private static final List<String> memoryUnits = new ArrayList<>();
     public static Logger logger = LogManager.getRootLogger();
 
+    //Инициализация листа
     static {
         memoryUnits.add("Б");
         memoryUnits.add("Кб");
@@ -25,7 +25,7 @@ public class Main {
         while (true) {
             var reader = new BufferedReader(new InputStreamReader(System.in));
             System.out.println("Введите путь к папке:");
-            String path = "";
+            String path;
             try {
                 path = reader.readLine();
             } catch (IOException e) {
@@ -33,7 +33,13 @@ public class Main {
                 System.out.println("Ошибка ввода");
                 continue;  //При возникновении ошибки начинает цикл сначала. Гарантирует инициализацию path
             }
+
+            //Выход из цикла
+            if (path.equals("")) {
+                break;
+            }
             File directory = new File(path);
+
             if (!directory.isDirectory()) {
                 System.out.println("Введён путь к файлу");
             }
@@ -41,12 +47,14 @@ public class Main {
                 System.out.println("Папка не существует");
             }
 
+            //Определение подходящего размера
             double folderSize = (double) FileUtils.calculateFolderSize(path);
             int unitOrder = 0;
             while (folderSize > 1024.0) {
                 folderSize /= 1024.0;
                 unitOrder++;
             }
+            //Дополнительное приведение к привычному для пользователя формата с минимальной потерей точности
             if (folderSize >= 1000.0) {
                 unitOrder++;
                 folderSize /= 1000.0;
