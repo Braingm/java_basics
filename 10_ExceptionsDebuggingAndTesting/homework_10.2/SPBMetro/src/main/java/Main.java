@@ -2,6 +2,8 @@ import core.Line;
 import core.Station;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.Marker;
+import org.apache.logging.log4j.MarkerManager;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -13,7 +15,11 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Main {
-    private static Logger logger;
+    private static final Logger LOGGER = LogManager.getLogger(Main.class);
+
+    private static final Marker INPUT_HISTORY_MARKER = MarkerManager.getMarker("INPUT_HISTORY");
+    private static final Marker INVALID_STATION_MARKER = MarkerManager.getMarker("INVALID_STATION");
+    private static final Marker EXCEPTIONS_CATCHER_MARKER = MarkerManager.getMarker("EXCEPTION_CATCHER");
 
     private static final String DATA_FILE = "src/main/resources/map.json";
     private static Scanner scanner;
@@ -22,7 +28,6 @@ public class Main {
 
     public static void main(String[] args) {
         RouteCalculator calculator = getRouteCalculator();
-        logger = LogManager.getRootLogger();
 
         System.out.println("Программа расчёта маршрутов метрополитена Санкт-Петербурга\n");
         scanner = new Scanner(System.in);
@@ -66,11 +71,11 @@ public class Main {
             String line = scanner.nextLine().trim();
             Station station = stationIndex.getStation(line);
             if (station != null) {
-                logger.info("Поиск станции: " + line);
+                LOGGER.info(INPUT_HISTORY_MARKER ,"Поиск станции: " + line);
                 return station;
             }
             System.out.println("Станция не найдена :(");
-            logger.debug("Ошибка поиска стации: " + line);
+            LOGGER.debug(INVALID_STATION_MARKER,"Ошибка поиска стации: " + line);
         }
     }
 
@@ -89,8 +94,8 @@ public class Main {
             JSONArray connectionsArray = (JSONArray) jsonData.get("connections");
             parseConnections(connectionsArray);
         } catch (Exception ex) {
+            LOGGER.error(EXCEPTIONS_CATCHER_MARKER,"Ошибка :" + ex);
             ex.printStackTrace();
-            logger.error("Ошибка :" + ex);
         }
     }
 
