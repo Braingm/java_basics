@@ -11,7 +11,7 @@ import java.util.List;
 
 public class Main {
     private static final List<String> memoryUnits = new ArrayList<>();
-    public static Logger logger = LogManager.getRootLogger();
+    public static final Logger LOGGER = LogManager.getLogger(Main.class);
 
     //Инициализация листа
     static {
@@ -29,7 +29,7 @@ public class Main {
             try {
                 path = reader.readLine();
             } catch (IOException e) {
-                logger.error(e);
+                LOGGER.error(e);
                 System.out.println("Ошибка ввода");
                 continue;  //При возникновении ошибки начинает цикл сначала. Гарантирует инициализацию path
             }
@@ -64,7 +64,7 @@ public class Main {
                 System.out.printf("Размер папки %s составляет %s %s%n", path, new DecimalFormat("0.0").format(folderSize), memoryUnits.get(unitOrder));
             } catch (Exception e) {
                 System.out.println("Произошла ошибка");
-                logger.error(e);
+                LOGGER.error(e);
             }
         }
     }
