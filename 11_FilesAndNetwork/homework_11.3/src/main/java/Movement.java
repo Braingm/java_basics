@@ -10,6 +10,7 @@ import java.util.Date;
 public class Movement {
     private String type;
     private String number;
+    @Getter
     private String currency;
     private Date date;
     private String UUID;
