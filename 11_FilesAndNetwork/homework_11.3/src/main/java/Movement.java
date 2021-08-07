@@ -46,7 +46,7 @@ public class Movement {
 
         if (input.matches("\"\\d+,\\d+\"")) {
             input = input.replace(',', '.');
-            builder.append(input.substring(1, input.length() - 1));
+            builder.append(input, 1, input.length() - 1);
         } else {
             input = input.replace(',', '.');
             builder.append(input);

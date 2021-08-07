@@ -1,13 +1,24 @@
-import java.math.BigDecimal;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 public class Movements {
-    public static List<Movement> movements = new ArrayList<>();
+    public List<Movement> movements = new ArrayList<>();
 
     public Movements(String pathMovementsCsv) {
+        Path path = Paths.get(pathMovementsCsv);
+        try {
+            Files.lines(path).skip(1).forEach(str -> {
+                movements.add(Movement.parseMovement(str.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)")));
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println(this.getIncomeSum());
     }
 
     public double getExpenseSum() {
@@ -17,6 +28,8 @@ public class Movements {
     }
 
     public double getIncomeSum() {
-        return 0.0;
+        Set<Double> sumSet = new HashSet();
+        movements.forEach(movement -> sumSet.add(movement.getIncome().doubleValue()));
+        return sumSet.stream().reduce(Double::sum).get();
     }
 }
