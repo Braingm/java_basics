@@ -2,6 +2,7 @@ package ru.braingm;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.jsoup.HttpStatusException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
@@ -12,11 +13,11 @@ public class MetroParser {
     public static JSONObject parse(String URL) throws IOException {
         Document doc;
 
-//        try {
-//            doc = Jsoup.connect(URL).maxBodySize(0).get();
-//        } catch (HttpStatusException e){
+       try {
+            doc = Jsoup.connect(URL).maxBodySize(0).get();
+       } catch (HttpStatusException e){
         doc = Jsoup.parse(Paths.get("src/main/resources/metro.html").toFile(), "UTF-8");
-//        }
+        }
 
         JSONObject outJson = new JSONObject();
         outJson.put("lines", parseLines(doc));
